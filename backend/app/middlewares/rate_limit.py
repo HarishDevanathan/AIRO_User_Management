@@ -1,4 +1,5 @@
-from fastapi import Request, HTTPException 
+from fastapi import Request, HTTPException
+from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware 
 import time
 
@@ -14,7 +15,7 @@ class TokenBucket:
     def consume(self):
         now = time.time()
 
-        elapsed = now = self.last_refill 
+        elapsed = now - self.last_refill 
 
         self.tokens = min(
             self.capacity, 
@@ -47,7 +48,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         bucket = self.buckets[client_ip]
 
         if not bucket.consume():
-            raise HTTPException(status_code = 429, detail = 'Request Rate exceeded')
+            return JSONResponse(status_code = 429, content = { "detail" : 'Request Rate exceeded'})
         
         return await call_next(request)
     
