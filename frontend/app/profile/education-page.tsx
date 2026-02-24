@@ -17,7 +17,7 @@ const YEARS = Array.from({ length: 30 }, (_, i) => String(new Date().getFullYear
 function Toast({ msg, type, onClose }: { msg: string; type: 'success' | 'error'; onClose: () => void }) {
   useEffect(() => { const t = setTimeout(onClose, 3000); return () => clearTimeout(t); }, [onClose]);
   return (
-    <div style={{ position: 'fixed', bottom: 28, right: 28, zIndex: 999, background: type === 'success' ? '#22c55e' : '#ef4444', color: 'white', borderRadius: 10, padding: '12px 18px', fontFamily: 'DM Sans', fontWeight: 500, fontSize: 14, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}>
+    <div style={{ position: 'fixed', bottom: 28, right: 28, zIndex: 999, background: type === 'success' ? '#22c55e' : '#ef4444', color: 'white', borderRadius: 10, padding: '12px 18px', fontFamily: 'Montserrat, sans-serif', fontWeight: 500, fontSize: 14, display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}>
       {type === 'success' ? '✓' : '✕'} {msg}
     </div>
   );
@@ -129,12 +129,12 @@ export default function EducationPage() {
   /* ── styles ── */
   const inp: React.CSSProperties = {
     width: '100%', padding: '10px 14px', borderRadius: 8,
-    border: '1.5px solid #e5e7eb', fontFamily: 'DM Sans', fontSize: 14,
+    border: '1.5px solid #e5e7eb', fontFamily: 'Montserrat, sans-serif', fontSize: 14,
     outline: 'none', background: 'white', color: '#1a1a2e', boxSizing: 'border-box',
   };
   const lbl: React.CSSProperties = {
     fontSize: 12.5, fontWeight: 600, color: '#6b7280',
-    marginBottom: 5, fontFamily: 'DM Sans', display: 'block',
+    marginBottom: 5, fontFamily: 'Montserrat, sans-serif', display: 'block',
   };
 
   return (
@@ -142,15 +142,15 @@ export default function EducationPage() {
       <Navbar active="Dashboard" />
 
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '32px 24px 80px' }}>
-        <button onClick={() => router.push('/home')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', fontSize: 13.5, marginBottom: 24, padding: 0, fontFamily: 'DM Sans' }}>
+        <button onClick={() => router.push('/home')} style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', border: 'none', cursor: 'pointer', color: '#6b7280', fontSize: 13.5, marginBottom: 24, padding: 0, fontFamily: 'Montserrat, sans-serif' }}>
           ← Back to Dashboard
         </button>
 
         <div style={{ marginBottom: 28 }}>
-          <h1 style={{ fontFamily: 'DM Sans', fontWeight: 700, fontSize: 26, color: '#1a1a2e', marginBottom: 4 }}>
+          <h1 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800, fontSize: 28, color: '#1a1a2e', marginBottom: 4 }}>
             🎓 {isEditMode ? 'Edit Education' : 'Add Education'}
           </h1>
-          <p style={{ color: '#9ca3af', fontSize: 14, fontFamily: 'DM Sans' }}>
+          <p style={{ color: '#9ca3af', fontSize: 14, fontFamily: 'Montserrat, sans-serif' }}>
             {isEditMode ? 'Update your academic record' : 'Add your academic background'}
           </p>
         </div>
@@ -158,21 +158,21 @@ export default function EducationPage() {
         {/* Existing records shown only in Add mode */}
         {!isEditMode && allEducation.length > 0 && (
           <div style={{ marginBottom: 28 }}>
-            <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.5px', color: '#9ca3af', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'DM Sans' }}>
+            <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.5px', color: '#9ca3af', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'Montserrat, sans-serif' }}>
               Saved Records ({allEducation.length})
             </p>
             {allEducation.map((edu, i) => (
               <div key={i} style={{ background: 'white', borderRadius: 10, padding: '14px 18px', border: '1px solid #e5e7eb', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 14 }}>
                 <div style={{ width: 34, height: 34, borderRadius: 8, background: '#ede9fe', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, flexShrink: 0 }}>🎓</div>
                 <div style={{ flex: 1 }}>
-                  <p style={{ fontFamily: 'DM Sans', fontWeight: 700, fontSize: 14, color: '#1a1a2e', marginBottom: 1 }}>{edu.degree} — {edu.branch}</p>
-                  <p style={{ fontSize: 13, color: '#9ca3af', fontFamily: 'DM Sans' }}>
+                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: 14, color: '#1a1a2e', marginBottom: 1 }}>{edu.degree} — {edu.branch}</p>
+                  <p style={{ fontSize: 13, color: '#9ca3af', fontFamily: 'Montserrat, sans-serif' }}>
                     {edu.institution} · {edu.start_year} – {edu.end_year || 'Present'}
                     {edu.cgpa ? ` · CGPA ${edu.cgpa}` : ''}
                   </p>
                 </div>
                 <button onClick={() => router.push(`/profile/education?edit=${i}`)}
-                  style={{ background: 'none', border: '1.5px solid #e5e7eb', borderRadius: 7, padding: '5px 12px', fontSize: 12, color: '#6b7280', cursor: 'pointer', fontFamily: 'DM Sans', fontWeight: 600 }}>
+                  style={{ background: 'none', border: '1.5px solid #e5e7eb', borderRadius: 7, padding: '5px 12px', fontSize: 12, color: '#6b7280', cursor: 'pointer', fontFamily: 'Montserrat, sans-serif', fontWeight: 600 }}>
                   ✏️ Edit
                 </button>
               </div>
@@ -182,7 +182,7 @@ export default function EducationPage() {
 
         <form onSubmit={handleSave}>
           <div style={{ background: 'white', borderRadius: 16, border: '1px solid #e5e7eb', padding: '28px 32px', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
-            <h2 style={{ fontFamily: 'DM Sans', fontWeight: 700, fontSize: 16, color: '#1a1a2e', marginBottom: 20 }}>
+            <h2 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: 16, color: '#1a1a2e', marginBottom: 20 }}>
               {isEditMode ? 'Edit Record' : 'New Record'}
             </h2>
 
@@ -190,9 +190,9 @@ export default function EducationPage() {
               <div key={i} style={{ border: '1.5px solid #e5e7eb', borderRadius: 12, padding: '20px 22px', marginBottom: 16 }}>
                 {!isEditMode && entries.length > 1 && (
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-                    <span style={{ fontFamily: 'DM Sans', fontWeight: 700, fontSize: 13, color: '#1a1a2e' }}>{edu.institution || `Education #${i + 1}`}</span>
+                    <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: 13, color: '#1a1a2e' }}>{edu.institution || `Education #${i + 1}`}</span>
                     <button type="button" onClick={() => { setEntries(p => p.filter((_, idx) => idx !== i)); setErrors(p => p.filter((_, idx) => idx !== i)); }}
-                      style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 6, padding: '3px 9px', color: '#ef4444', fontSize: 12, cursor: 'pointer', fontFamily: 'DM Sans' }}>
+                      style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 6, padding: '3px 9px', color: '#ef4444', fontSize: 12, cursor: 'pointer', fontFamily: 'Montserrat, sans-serif' }}>
                       Remove
                     </button>
                   </div>
@@ -207,7 +207,7 @@ export default function EducationPage() {
                       <option value="">Select degree</option>
                       {DEGREES.map(d => <option key={d} value={d}>{d}</option>)}
                     </select>
-                    {errors[i]?.degree && <span style={{ fontSize: 12, color: '#ef4444', marginTop: 3, fontFamily: 'DM Sans' }}>Required</span>}
+                    {errors[i]?.degree && <span style={{ fontSize: 12, color: '#ef4444', marginTop: 3, fontFamily: 'Montserrat, sans-serif' }}>Required</span>}
                   </div>
 
                   {/* Branch */}
@@ -216,7 +216,7 @@ export default function EducationPage() {
                     <input style={{ ...inp, border: `1.5px solid ${errors[i]?.branch ? '#ef4444' : '#e5e7eb'}` }}
                       placeholder="e.g. Computer Science" value={edu.branch}
                       onChange={e => change(i, 'branch', e.target.value)} />
-                    {errors[i]?.branch && <span style={{ fontSize: 12, color: '#ef4444', marginTop: 3, fontFamily: 'DM Sans' }}>Required</span>}
+                    {errors[i]?.branch && <span style={{ fontSize: 12, color: '#ef4444', marginTop: 3, fontFamily: 'Montserrat, sans-serif' }}>Required</span>}
                   </div>
 
                   {/* CGPA */}
@@ -233,7 +233,7 @@ export default function EducationPage() {
                     <input style={{ ...inp, border: `1.5px solid ${errors[i]?.institution ? '#ef4444' : '#e5e7eb'}` }}
                       placeholder="e.g. IIT Bombay" value={edu.institution}
                       onChange={e => change(i, 'institution', e.target.value)} />
-                    {errors[i]?.institution && <span style={{ fontSize: 12, color: '#ef4444', marginTop: 3, fontFamily: 'DM Sans' }}>Required</span>}
+                    {errors[i]?.institution && <span style={{ fontSize: 12, color: '#ef4444', marginTop: 3, fontFamily: 'Montserrat, sans-serif' }}>Required</span>}
                   </div>
 
                   {/* Start Year */}
@@ -244,7 +244,7 @@ export default function EducationPage() {
                       <option value="">Select year</option>
                       {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
                     </select>
-                    {errors[i]?.start_year && <span style={{ fontSize: 12, color: '#ef4444', marginTop: 3, fontFamily: 'DM Sans' }}>Required</span>}
+                    {errors[i]?.start_year && <span style={{ fontSize: 12, color: '#ef4444', marginTop: 3, fontFamily: 'Montserrat, sans-serif' }}>Required</span>}
                   </div>
 
                   {/* End Year — "Present" is the default/first option */}
@@ -262,18 +262,18 @@ export default function EducationPage() {
             {!isEditMode && (
               <button type="button"
                 onClick={() => { setEntries(p => [...p, { ...EMPTY }]); setErrors(p => [...p, {}]); }}
-                style={{ width: '100%', padding: '12px', border: '2px dashed #e5e7eb', borderRadius: 10, background: 'transparent', cursor: 'pointer', color: '#7c3aed', fontFamily: 'DM Sans', fontWeight: 600, fontSize: 13.5, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: 24 }}>
+                style={{ width: '100%', padding: '12px', border: '2px dashed #e5e7eb', borderRadius: 10, background: 'transparent', cursor: 'pointer', color: '#7c3aed', fontFamily: 'Montserrat, sans-serif', fontWeight: 600, fontSize: 13.5, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: 24 }}>
                 + Add Another
               </button>
             )}
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12, marginTop: 8 }}>
               <button type="button" onClick={() => router.push('/home')}
-                style={{ padding: '12px 24px', border: '1.5px solid #e5e7eb', borderRadius: 10, background: 'none', cursor: 'pointer', color: '#6b7280', fontFamily: 'DM Sans', fontSize: 14 }}>
+                style={{ padding: '12px 24px', border: '1.5px solid #e5e7eb', borderRadius: 10, background: 'none', cursor: 'pointer', color: '#6b7280', fontFamily: 'Montserrat, sans-serif', fontSize: 14 }}>
                 Cancel
               </button>
               <button type="submit" disabled={loading}
-                style={{ padding: '12px 32px', background: '#1a1a2e', border: 'none', borderRadius: 10, color: 'white', fontFamily: 'DM Sans', fontWeight: 600, fontSize: 14, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1 }}>
+                style={{ padding: '12px 32px', background: '#1a1a2e', border: 'none', borderRadius: 10, color: 'white', fontFamily: 'Montserrat, sans-serif', fontWeight: 600, fontSize: 14, cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1 }}>
                 {loading ? 'Saving...' : isEditMode ? '✓ Update Education' : '✓ Save Education'}
               </button>
             </div>
