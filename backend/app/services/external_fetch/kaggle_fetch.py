@@ -1,34 +1,41 @@
-import os
-import tempfile
-from kaggle.api.kaggle_api_extended import KaggleApi
+import httpx
+import asyncio
+from bs4 import BeautifulSoup
 from datetime import datetime
 
-async def fetch_kaggle_from_token(username: str, token_data: dict):
+async def fetch_kaggle(username: str):
+
+    url = f"https://www.kaggle.com/{username}"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
     try:
-        # Create temporary kaggle.json file
-        with tempfile.TemporaryDirectory() as tmpdir:
-            kaggle_path = os.path.join(tmpdir, "kaggle.json")
+        async with httpx.AsyncClient(timeout=5, headers=headers) as client:
+            response = await client.get(url)
 
-            with open(kaggle_path, "w") as f:
-                f.write(str(token_data).replace("'", '"'))
+        if response.status_code != 200:
+            return {"error": "Kaggle user not found"}
 
-            os.environ["KAGGLE_CONFIG_DIR"] = tmpdir
+        soup = BeautifulSoup(response.text, "html.parser")
 
-            api = KaggleApi()
-            api.authenticate()
+        title = soup.find("title")
+        description = soup.find("meta", attrs={"name": "description"})
+        og_username = soup.find("meta", attrs={"property": "og:username"})
+        og_image = soup.find("meta", attrs={"name": "twitter:image"})
 
-            competitions = api.competitions_list_user(username)
-
-            datasets = api.datasets_list(user=username)
-            notebooks = api.kernels_list(user=username)
-
-            return {
-                "username": username,
-                "total_competitions": len(competitions),
-                "total_datasets": len(datasets),
-                "total_notebooks": len(notebooks),
-                "updated_at": datetime.now()
-            }
+        return {
+            "username": og_username["content"] if og_username else username,
+            "display_name": title.text.replace("| Kaggle", "").strip() if title else "",
+            "bio": description["content"] if description else "",
+            "profile_image": og_image["content"] if og_image else "",
+            "profile_url": url,
+            "scraped_at": datetime.utcnow().isoformat()
+        }
 
     except Exception as e:
         return {"error": str(e)}
+    
+result = asyncio.run(fetch_kaggle("ganeshkumarks"))
+print(result)
