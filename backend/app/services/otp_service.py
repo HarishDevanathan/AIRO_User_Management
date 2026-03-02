@@ -39,17 +39,36 @@ async def verify_otp(email, otp):
 
     return True
 
-from fastapi_mail import FastMail, MessageSchema
-from app.core.config import settings
+# from fastapi_mail import FastMail, MessageSchema
+# from app.core.config import settings
+
+# async def send_otp_email(email: str, otp: str):
+
+#     message = MessageSchema(
+#         subject="Your OTP Code",
+#         recipients=[email],
+#         body=f"Your OTP is {otp}. It expires in 5 minutes.",
+#         subtype="plain"
+#     )
+
+#     fm = FastMail(settings.mail_conf)
+#     await fm.send_message(message)
+
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 async def send_otp_email(email: str, otp: str):
 
-    message = MessageSchema(
+    message = Mail(
+        from_email=os.getenv("MAIL_FROM"),
+        to_emails=email,
         subject="Your OTP Code",
-        recipients=[email],
-        body=f"Your OTP is {otp}. It expires in 5 minutes.",
-        subtype="plain"
+        plain_text_content=f"Your OTP is {otp}. It expires in 5 minutes."
     )
 
-    fm = FastMail(settings.mail_conf)
-    await fm.send_message(message)
+    try:
+        sg = SendGridAPIClient(os.getenv("SENDGRID_API_KEY"))
+        sg.send(message)
+    except Exception as e:
+        print("SendGrid error:", str(e))
