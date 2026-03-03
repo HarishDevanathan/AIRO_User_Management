@@ -1,1 +1,3 @@
+'use client';
+
 export { ExperiencePage as default } from '../other-pages';

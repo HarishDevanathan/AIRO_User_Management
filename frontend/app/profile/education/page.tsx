@@ -1,1 +1,3 @@
+'use client';
+
 export { default } from '@/app/profile/education-page';
