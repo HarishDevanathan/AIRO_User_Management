@@ -15,7 +15,7 @@ async def fetch_github(username: str):
             return {"error": "GitHub user not found"}
 
         if repos_res.status_code != 200:
-            print(user_res)
+            print(repos_res)
             return {"error": "Failed to fetch repositories"}
 
         user = user_res.json()
